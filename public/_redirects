@@ -1,0 +1,13 @@
+# Dynamic career code results routing
+/results/analyzer-solo    /index.html   200
+/results/analyzer-team    /index.html   200
+/results/analyzer-client  /index.html   200
+/results/builder-solo     /index.html   200
+/results/builder-team     /index.html   200
+/results/builder-client   /index.html   200
+/results/innovator-solo   /index.html   200
+/results/innovator-team   /index.html   200
+/results/innovator-client /index.html   200
+
+# Fallback
+/*    /index.html   200

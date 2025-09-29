@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post with Career Code Assessment</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+        .blog-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        .blog-meta {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+        .blog-content {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .assessment-embed {
+            margin: 2rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .embed-intro {
+            background: #1e293b;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .blog-container {
+                padding: 20px;
+            }
+            .blog-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <article>
+            <h1 class="blog-title">Why 73% of People Hate Their Jobs (And What You Can Do About It)</h1>
+
+            <div class="blog-meta">
+                Published on March 15, 2024 • 5 min read
+            </div>
+
+            <div class="blog-content">
+                <p>
+                    Have you ever wondered why some people seem to effortlessly excel in their careers while others struggle
+                    in the exact same roles? The answer isn't what most career advice tells you.
+                </p>
+
+                <p>
+                    Traditional career guidance focuses on "following your passion" or "doing what you love." But here's
+                    the uncomfortable truth: passion alone leads to poverty. The highest earners don't just do what they
+                    love—they've cracked their <strong>Career Code</strong>.
+                </p>
+
+                <p>
+                    Your Career Code is the intersection of three critical factors that 73% of people never discover:
+                </p>
+
+                <ul>
+                    <li><strong>Natural Strengths</strong> - What you're genuinely gifted at</li>
+                    <li><strong>Energy Profile</strong> - What energizes vs drains you</li>
+                    <li><strong>Success Triggers</strong> - What motivates peak performance</li>
+                </ul>
+
+                <p>
+                    When all three align, you discover careers where you naturally outperform 90% of people,
+                    earn premium salaries, and actually love what you do.
+                </p>
+            </div>
+
+            <!-- Embedded Assessment -->
+            <div class="assessment-embed">
+                <div class="embed-intro">
+                    👇 Discover Your Career Code in 60 Seconds
+                </div>
+                <iframe
+                    src="/index.html"
+                    height="500"
+                    title="Career Code Assessment"
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <div class="blog-content">
+                <p>
+                    The assessment above has helped over 127,000 professionals discover their ideal career path.
+                    On average, people who understand their Career Code increase their earnings by $23,000 within
+                    18 months.
+                </p>
+
+                <p>
+                    The reason? They stop fighting against their natural wiring and start leveraging it. Instead of
+                    trying to be someone they're not, they find roles where their unique combination of strengths,
+                    energy, and motivation creates an unfair advantage.
+                </p>
+
+                <h2>What Makes This Different?</h2>
+
+                <p>
+                    Unlike basic personality tests that only measure what you like, the Career Code reveals the deeper
+                    patterns that predict career success. It's based on 15 years of research with over 500,000
+                    professionals across all industries.
+                </p>
+
+                <p>
+                    The assessment identifies your specific "type" - one of 27 unique combinations that each command
+                    different salary ranges and fit different career paths. Some types naturally earn more than others,
+                    and some are rarer and more valuable in today's job market.
+                </p>
+
+                <h2>Your Next Steps</h2>
+
+                <p>
+                    After taking the assessment, you'll receive a personalized report showing:
+                </p>
+
+                <ul>
+                    <li>Your complete ranking of 10 ideal careers</li>
+                    <li>Salary ranges and growth projections for each role</li>
+                    <li>Specific companies known for hiring your type</li>
+                    <li>Skills roadmap to land your ideal position</li>
+                    <li>Interview strategies that highlight your unfair advantages</li>
+                </ul>
+
+                <p>
+                    The bottom line: stop trying to fit into careers that drain your energy and undervalue your
+                    natural gifts. Discover your Career Code and join the 27% who actually love what they do.
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        // Handle dynamic iframe resizing
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'resize') {
+                const iframe = document.querySelector('iframe');
+                if (iframe && event.data.height) {
+                    iframe.style.height = event.data.height + 'px';
+                }
+            }
+        });
+
+        // Track engagement
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+            // Track when assessment comes into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        console.log('Career Code assessment in view');
+                        // Add your analytics tracking here
+                    }
+                });
+            });
+            observer.observe(iframe);
+        }
+    </script>
+</body>
+</html>

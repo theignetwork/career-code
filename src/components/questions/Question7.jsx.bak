@@ -1,0 +1,119 @@
+import React, { useState } from 'react';
+import { Award, Target, Crown, Star, DollarSign, Key } from 'lucide-react';
+
+const Question7 = ({ selectedValue, onSelect }) => {
+  const [selections, setSelections] = useState(selectedValue || []);
+
+  const options = [
+    {
+      value: 'mastery',
+      icon: Award,
+      title: 'Mastery',
+      description: 'Expertise recognition'
+    },
+    {
+      value: 'impact',
+      icon: Target,
+      title: 'Impact',
+      description: 'Meaningful change'
+    },
+    {
+      value: 'leadership',
+      icon: Crown,
+      title: 'Leadership',
+      description: 'Team influence'
+    },
+    {
+      value: 'innovation',
+      icon: Star,
+      title: 'Innovation',
+      description: 'Creating new solutions'
+    },
+    {
+      value: 'wealth',
+      icon: DollarSign,
+      title: 'Wealth',
+      description: 'Financial success'
+    },
+    {
+      value: 'freedom',
+      icon: Key,
+      title: 'Freedom',
+      description: 'Autonomy/flexibility'
+    }
+  ];
+
+  const handleSelect = (value) => {
+    let newSelections;
+    if (selections.includes(value)) {
+      // Remove if already selected
+      newSelections = selections.filter(s => s !== value);
+    } else if (selections.length < 2) {
+      // Add if less than 2 selected
+      newSelections = [...selections, value];
+    } else {
+      // Replace oldest selection if 2 already selected
+      newSelections = [selections[1], value];
+    }
+
+    setSelections(newSelections);
+    onSelect(newSelections);
+
+    // Auto-advance only when 2 items are selected
+    if (newSelections.length === 2) {
+      setTimeout(() => {
+        // The parent component will handle the advancement
+      }, 800);
+    }
+  };
+
+  return (
+    <div className="max-h-[500px] py-6">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-white mb-4">
+          Most motivating achievement:
+        </h2>
+        <p className="text-slate-400 text-sm">
+          Select your top 2 driving forces ({selections.length}/2 selected)
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+        {options.map((option) => {
+          const IconComponent = option.icon;
+          const isSelected = selections.includes(option.value);
+          const canSelect = selections.length < 2 || isSelected;
+
+          return (
+            <button
+              key={option.value}
+              onClick={() => handleSelect(option.value)}
+              disabled={!canSelect}
+              className={`premium-card p-4 text-center transition-all duration-300 transform hover:scale-105 ${
+                isSelected
+                  ? 'selected'
+                  : canSelect
+                    ? ''
+                    : 'opacity-50 cursor-not-allowed'
+              }`}
+            >
+              <div className="flex flex-col items-center space-y-2">
+                <IconComponent
+                  className={`w-6 h-6 ${isSelected ? 'premium-icon selected' : 'premium-icon'}`}
+                />
+                <h3 className="text-sm font-semibold text-white">
+                  {option.title}
+                </h3>
+                <p className="text-xs text-slate-400 leading-tight">
+                  {option.description}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Question7;
