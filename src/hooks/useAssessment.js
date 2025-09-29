@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { calculateCareerCode, rankCareers } from '../utils/calculateCareerCode.js';
 import analytics from '../utils/analytics.js';
+import activeCampaignIntegration from '../utils/activeCampaignIntegration.js';
 
 export const useAssessment = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -100,10 +101,49 @@ export const useAssessment = () => {
     return sorted[1] || sorted[0];
   };
 
-  const captureEmail = (email) => {
-    setUserEmail(email);
-    setEmailCaptured(true);
-    nextStep(); // Move to complete results
+  const captureEmail = async (email) => {
+    // Validate email format
+    if (!activeCampaignIntegration.validateEmail(email)) {
+      throw new Error('Please enter a valid email address');
+    }
+
+    // Validate that we have career code data
+    if (!careerCode || !careerCode.code || !careerCode.name) {
+      throw new Error('Career assessment must be completed before capturing email');
+    }
+
+    try {
+      // Format assessment data for ActiveCampaign
+      const assessmentData = activeCampaignIntegration.formatAssessmentData(email, careerCode);
+
+      console.log('Sending assessment data to ActiveCampaign:', assessmentData);
+
+      // Send to ActiveCampaign via n8n webhook with retry logic
+      const result = await activeCampaignIntegration.sendToActiveCampaignWithRetry(assessmentData);
+
+      console.log('ActiveCampaign integration successful:', result);
+
+      // Update local state on success
+      setUserEmail(email);
+      setEmailCaptured(true);
+
+      // Return success result for caller
+      return {
+        success: true,
+        message: 'Email captured and sent to ActiveCampaign successfully',
+        data: result
+      };
+
+    } catch (error) {
+      console.error('Failed to capture email and send to ActiveCampaign:', error);
+
+      // Still update local state to allow user to proceed with results
+      setUserEmail(email);
+      setEmailCaptured(true);
+
+      // Re-throw error for UI handling
+      throw new Error(`Email capture failed: ${error.message}`);
+    }
   };
 
   const resetAssessment = () => {
