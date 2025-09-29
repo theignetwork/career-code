@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAssessment } from './hooks/useAssessment.js';
 import LandingPage from './components/LandingPage.jsx';
 import Question1 from './components/questions/Question1.jsx';
@@ -13,6 +13,7 @@ import Question9 from './components/questions/Question9.jsx';
 import Question10 from './components/questions/Question10.jsx';
 import CompactPartialResults from './components/CompactPartialResults.jsx';
 import CompleteResults from './components/CompleteResults.jsx';
+import ResultsModal from './components/ResultsModal.jsx';
 import ProgressIndicator from './components/ProgressIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { iframeOptimizer } from './utils/iframeOptimizer.js';
@@ -30,6 +31,36 @@ function App() {
     captureEmail,
     resetAssessment
   } = useAssessment();
+
+  // Modal state management
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [modalResults, setModalResults] = useState(null);
+
+  // Enhanced email capture with modal display
+  const handleEmailCapture = async (email) => {
+    try {
+      // Call original email capture logic
+      await captureEmail(email);
+
+      // Set up modal results
+      setModalResults(careerCode);
+      setShowResultsModal(true);
+
+      // Track event
+      iframeOptimizer.sendEventToParent('email-captured', {
+        email,
+        careerCode: careerCode.code
+      });
+    } catch (error) {
+      console.error('Email capture failed:', error);
+    }
+  };
+
+  // Close modal handler
+  const handleCloseModal = () => {
+    setShowResultsModal(false);
+    setModalResults(null);
+  };
 
   // Initialize iframe optimizations
   useEffect(() => {
@@ -157,7 +188,7 @@ function App() {
           <CompactPartialResults
             careerCode={careerCode}
             topCareer={rankedCareers[1]} // Show #2 career as teaser
-            onEmailCapture={captureEmail}
+            onEmailCapture={handleEmailCapture}
           />
         );
 
@@ -200,6 +231,13 @@ function App() {
             <div data-event="assessment-progress" data-progress={Math.round((currentStep / 10) * 100)}></div>
           </div>
         </div>
+
+        {/* Results Modal */}
+        <ResultsModal
+          isOpen={showResultsModal}
+          onClose={handleCloseModal}
+          results={modalResults}
+        />
       </div>
     </ErrorBoundary>
   );

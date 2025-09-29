@@ -15,30 +15,23 @@ const CompactPartialResults = ({ careerCode, topCareer, onEmailCapture }) => {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
 
-    // Debug the career code calculation
-    console.log('Email submission - Current career code:', careerCode);
-    console.log('Career code object keys:', Object.keys(careerCode));
-    console.log('Career code.code value:', careerCode.code);
-    console.log('Redirecting to:', `/results/${careerCode.code}`);
-
-    // Add debugging to career code calculation
+    // Validate career code
     if (!careerCode || !careerCode.code || careerCode.code.includes('undefined')) {
       console.error('Invalid career code calculated:', careerCode);
       alert('Error: Invalid career code. Please try the assessment again.');
       return;
     }
 
-    // TODO: Integrate with ActiveCampaign API later
-    console.log('Email:', email, 'Career Code:', careerCode);
-
-    // Close popup and redirect to dynamic results
+    // Close popup first
     setShowEmailPopup(false);
 
-    // Add small delay to ensure popup closes before redirect
-    setTimeout(() => {
-      console.log('Executing redirect to:', `/results/${careerCode.code}`);
-      window.location.href = `/results/${careerCode.code}`;
-    }, 100);
+    // Trigger modal display via parent callback
+    if (onEmailCapture) {
+      await onEmailCapture(email);
+    }
+
+    // Clear email input
+    setEmail('');
   };
   const formatSalary = (min, max) => {
     const formatNumber = (num) => {
