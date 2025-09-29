@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { calculateCareerCode, rankCareers } from '../utils/calculateCareerCode.js';
+import analytics from '../utils/analytics.js';
 
 export const useAssessment = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -24,6 +25,27 @@ export const useAssessment = () => {
   const updateResponse = (field, value) => {
     const newResponses = { ...responses, [field]: value };
     setResponses(newResponses);
+
+    // Track question answer in GA4
+    const questionNumber = parseInt(field.replace('q', ''));
+    const questionTexts = {
+      1: 'When tackling a complex problem, what\'s your natural approach?',
+      2: 'What drives your best performance at work?',
+      3: 'What feels most natural and energizing to you?',
+      4: 'Which work environment brings out your best?',
+      5: 'How do you naturally recharge and regain energy?',
+      6: 'When are you most productive and focused?',
+      7: 'What type of achievement gives you the deepest satisfaction?',
+      8: 'What would make you feel most successful in your career?',
+      9: 'Which accomplishment would you be most proud of?',
+      10: 'What ultimately motivates you in your career?'
+    };
+
+    analytics.trackQuestionAnswered(
+      questionNumber,
+      questionTexts[questionNumber] || 'Unknown question',
+      value
+    );
 
     // Auto-advance after any selection with appropriate delays
     if (field === 'q10') {
@@ -53,6 +75,9 @@ export const useAssessment = () => {
 
     setCareerCode(code);
     setRankedCareers(careers);
+
+    // Track assessment completion in GA4
+    analytics.trackAssessmentCompleted(code.code, code.name, 10);
   };
 
   const calculateResults = () => {

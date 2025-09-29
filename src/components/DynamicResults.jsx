@@ -2,9 +2,27 @@ import React from 'react';
 import { Star, TrendingUp, Users, Building, DollarSign, Award, ArrowRight, Target, Lightbulb, AlertCircle } from 'lucide-react';
 import { getCareerCodeDescription } from '../utils/calculateCareerCode.js';
 import { careerDatabase } from '../data/careerDatabase.js';
+import analytics from '../utils/analytics.js';
 
 const DynamicResults = ({ careerCode }) => {
   console.log('DynamicResults component loaded with careerCode:', careerCode);
+
+  // Handle career card clicks for analytics
+  const handleCareerClick = (career, position) => {
+    analytics.trackCareerClicked(career.title, careerCode.code, position);
+  };
+
+  // Handle IG Network CTA click
+  const handleIGNetworkClick = () => {
+    analytics.trackIGNetworkClicked(careerCode.code);
+  };
+
+  // Helper function for ordinal suffix
+  const getOrdinalSuffix = (num) => {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const value = num % 100;
+    return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
+  };
 
   // Validate career code exists
   if (!careerCode) {
@@ -206,7 +224,10 @@ const DynamicResults = ({ careerCode }) => {
         </h2>
 
         {/* #1 Career (Most Prominent) */}
-        <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-lg p-8 mb-6">
+        <div
+          className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-lg p-8 mb-6 cursor-pointer hover:from-teal-700 hover:to-teal-800 transition-colors"
+          onClick={() => handleCareerClick(topCareers[0], '1st')}
+        >
           <div className="flex items-center gap-3 mb-4">
             <span className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-full text-lg">#1</span>
             <h3 className="text-3xl font-bold text-white">{topCareers[0].title}</h3>
@@ -238,7 +259,11 @@ const DynamicResults = ({ careerCode }) => {
         {/* Careers #2-8 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {topCareers.slice(1).map((career, index) => (
-            <div key={index} className="bg-slate-700 rounded-lg p-6">
+            <div
+              key={index}
+              className="bg-slate-700 rounded-lg p-6 cursor-pointer hover:bg-slate-600 transition-colors"
+              onClick={() => handleCareerClick(career, `${index + 2}${getOrdinalSuffix(index + 2)}`)}
+            >
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-slate-600 text-white font-bold px-3 py-1 rounded-full">
                   #{index + 2}
@@ -419,6 +444,7 @@ const DynamicResults = ({ careerCode }) => {
             href="https://members.theinterviewguys.com"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleIGNetworkClick}
             className="bg-white text-teal-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors text-lg"
           >
             Start Your Free 7-Day Trial →

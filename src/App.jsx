@@ -16,6 +16,7 @@ import ResultsModal from './components/ResultsModal.jsx';
 import ProgressIndicator from './components/ProgressIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { iframeOptimizer } from './utils/iframeOptimizer.js';
+import analytics from './utils/analytics.js';
 
 function App() {
   const {
@@ -45,7 +46,12 @@ function App() {
       setModalResults(careerCode);
       setShowResultsModal(true);
 
-      // Track event
+      // Track GA4 conversion events
+      analytics.trackEmailCaptured(email, careerCode.code);
+      analytics.trackResultsModalOpened(careerCode.code, careerCode.name);
+      analytics.trackConversion('email_capture', careerCode.code, 10);
+
+      // Track event for iframe parent
       iframeOptimizer.sendEventToParent('email-captured', {
         email,
         careerCode: careerCode.code
@@ -57,21 +63,35 @@ function App() {
 
   // Close modal handler - Reset entire assessment
   const handleCloseModal = () => {
+    const currentCareerCode = modalResults?.code;
+
     setShowResultsModal(false);
     setModalResults(null);
+
+    // Track GA4 modal close event
+    if (currentCareerCode) {
+      analytics.trackResultsModalClosed(currentCareerCode);
+      analytics.trackAssessmentRetaken(currentCareerCode);
+    }
 
     // Reset the entire assessment back to landing page
     resetAssessment();
 
-    // Track event
+    // Track event for iframe parent
     iframeOptimizer.sendEventToParent('results-modal-closed', {
       action: 'reset-to-landing'
     });
   };
 
-  // Initialize iframe optimizations
+  // Initialize iframe optimizations and analytics
   useEffect(() => {
-    // Track page views and events for analytics
+    // Initialize GA4 analytics
+    analytics.initGA4();
+
+    // Track initial page view
+    analytics.trackPageView('Career Code Assessment', '/');
+
+    // Track page views and events for iframe parent
     iframeOptimizer.sendEventToParent('assessment-loaded');
   }, []);
 

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA4 Analytics Testing - Career Code Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: #14b8a6;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .analytics-info {
+            background: #e0f2f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #14b8a6;
+        }
+        .event-section {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #9c27b0;
+        }
+        .testing-steps {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #ff9800;
+        }
+        .iframe-container {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            background: white;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+        .code {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .success-criteria {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GA4 Analytics Testing Guide</h1>
+            <p>Career Code Assessment - Google Analytics 4 Implementation</p>
+        </div>
+
+        <div class="analytics-info">
+            <h3>🔍 GA4 Configuration Details</h3>
+            <div class="code">
+                <strong>Measurement ID:</strong> G-Z6WS2VE8K9<br>
+                <strong>Stream ID:</strong> 10405848421<br>
+                <strong>Stream URL:</strong> https://blog.theinterviewguys.com
+            </div>
+        </div>
+
+        <h2>📊 Events Being Tracked</h2>
+
+        <div class="event-section">
+            <h3>1. Page View (Automatic)</h3>
+            <p><strong>When:</strong> Tool loads initially</p>
+            <p><strong>Parameters:</strong> page_title, page_location, stream_id</p>
+        </div>
+
+        <div class="event-section">
+            <h3>2. assessment_started</h3>
+            <p><strong>When:</strong> User clicks "Discover My Career Code" button</p>
+            <p><strong>Parameters:</strong> source ('landing_page'), event_category ('engagement')</p>
+        </div>
+
+        <div class="event-section">
+            <h3>3. question_answered</h3>
+            <p><strong>When:</strong> Every time user answers a question</p>
+            <p><strong>Parameters:</strong> question_number, question_text, answer, event_category ('engagement')</p>
+        </div>
+
+        <div class="event-section">
+            <h3>4. assessment_completed</h3>
+            <p><strong>When:</strong> User finishes all questions</p>
+            <p><strong>Parameters:</strong> career_code, career_name, total_questions (10), event_category ('conversion')</p>
+        </div>
+
+        <div class="event-section">
+            <h3>5. email_captured</h3>
+            <p><strong>When:</strong> User submits email for results</p>
+            <p><strong>Parameters:</strong> career_code, event_category ('conversion'), value (10)</p>
+        </div>
+
+        <div class="event-section">
+            <h3>6. results_modal_opened</h3>
+            <p><strong>When:</strong> Results modal displays</p>
+            <p><strong>Parameters:</strong> career_code, career_name, event_category ('engagement')</p>
+        </div>
+
+        <div class="event-section">
+            <h3>7. results_modal_closed</h3>
+            <p><strong>When:</strong> User closes the results modal</p>
+            <p><strong>Parameters:</strong> career_code, event_category ('engagement')</p>
+        </div>
+
+        <div class="event-section">
+            <h3>8. career_clicked</h3>
+            <p><strong>When:</strong> User clicks on a career match in results</p>
+            <p><strong>Parameters:</strong> career_title, career_code, position ('1st', '2nd', etc.)</p>
+        </div>
+
+        <div class="event-section">
+            <h3>9. ig_network_clicked</h3>
+            <p><strong>When:</strong> User clicks IG Network CTA button</p>
+            <p><strong>Parameters:</strong> career_code, event_category ('conversion'), value (5)</p>
+        </div>
+
+        <h2>🧪 Test the Implementation</h2>
+
+        <div class="iframe-container">
+            <iframe
+                src="/"
+                title="Career Code Assessment - GA4 Testing"
+                allow="clipboard-write"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+        </div>
+
+        <div class="testing-steps">
+            <h3>📋 Testing Instructions</h3>
+            <ol>
+                <li><strong>Open GA4 Real-Time Reports:</strong>
+                    <ul>
+                        <li>Go to Google Analytics 4</li>
+                        <li>Navigate to Reports → Realtime</li>
+                        <li>Keep this open while testing</li>
+                    </ul>
+                </li>
+
+                <li><strong>Complete Full User Journey:</strong>
+                    <ol>
+                        <li>Click "Discover My Career Code" (tracks: assessment_started)</li>
+                        <li>Answer all 10 questions (tracks: question_answered × 10)</li>
+                        <li>Wait for partial results (tracks: assessment_completed)</li>
+                        <li>Enter email and submit (tracks: email_captured, results_modal_opened)</li>
+                        <li>Click on different career matches (tracks: career_clicked)</li>
+                        <li>Click IG Network CTA (tracks: ig_network_clicked)</li>
+                        <li>Close modal (tracks: results_modal_closed)</li>
+                    </ol>
+                </li>
+
+                <li><strong>Verify in GA4:</strong>
+                    <ul>
+                        <li>Check that all events appear in real-time</li>
+                        <li>Verify event parameters are captured</li>
+                        <li>Confirm stream_id (10405848421) is included</li>
+                        <li>Test on both desktop and mobile</li>
+                    </ul>
+                </li>
+
+                <li><strong>Browser Console Check:</strong>
+                    <ul>
+                        <li>Open browser DevTools → Console</li>
+                        <li>Look for GA4 tracking confirmation logs</li>
+                        <li>Verify no errors in GA4 initialization</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="success-criteria">
+            <h3>✅ Success Criteria</h3>
+            <ul>
+                <li><strong>GA4 Script Loading:</strong> GA4 script loads on tool initialization</li>
+                <li><strong>Event Tracking:</strong> All 9 event types fire correctly</li>
+                <li><strong>Parameter Capture:</strong> Event parameters are captured accurately</li>
+                <li><strong>Cross-Platform:</strong> Tracking works on desktop and mobile</li>
+                <li><strong>Performance:</strong> Tool performance is not impacted</li>
+                <li><strong>Real-Time Data:</strong> Events appear in GA4 Real-Time reports</li>
+                <li><strong>Error Handling:</strong> No tracking errors if GA4 script fails</li>
+                <li><strong>iframe Compatibility:</strong> Works in embedded iframe context</li>
+                <li><strong>Privacy Compliance:</strong> No PII is tracked</li>
+            </ul>
+        </div>
+
+        <div class="analytics-info">
+            <h3>🔧 Debug Information</h3>
+            <p>Open browser console to see GA4 tracking logs:</p>
+            <div class="code">
+                GA4 initialized successfully<br>
+                GA4 Event tracked: assessment_started {source: "landing_page", ...}<br>
+                GA4 Event tracked: question_answered {question_number: 1, ...}<br>
+                GA4 Event tracked: email_captured {career_code: "analyzer-team", ...}
+            </div>
+        </div>
+
+        <div class="testing-steps">
+            <h3>🚨 Important Notes</h3>
+            <ul>
+                <li><strong>No PII Tracking:</strong> Email addresses are NOT sent to GA4</li>
+                <li><strong>Error Resilience:</strong> App continues working if GA4 fails to load</li>
+                <li><strong>Event Naming:</strong> All event names use lowercase with underscores</li>
+                <li><strong>Stream ID:</strong> All events include Stream ID 10405848421</li>
+                <li><strong>Performance:</strong> Analytics tracking is non-blocking and optimized</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

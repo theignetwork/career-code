@@ -1,7 +1,15 @@
 import React from 'react';
 import { CircuitBoard, Zap, Target, ArrowRight, TrendingUp, Users } from 'lucide-react';
+import analytics from '../utils/analytics.js';
 
 const LandingPage = ({ onStart }) => {
+  const handleStartClick = () => {
+    // Track assessment start
+    analytics.trackAssessmentStarted('landing_page');
+
+    // Call original onStart function
+    onStart();
+  };
   return (
     <div className="min-h-[500px] py-8">
       <div className="h-full flex flex-col space-y-6">
@@ -73,7 +81,7 @@ const LandingPage = ({ onStart }) => {
         <div className="text-center flex-grow flex items-center justify-center">
           <div className="space-y-4">
             <button
-              onClick={onStart}
+              onClick={handleStartClick}
               className="premium-button text-xl px-10 py-4 glow-effect transform hover:scale-105 flex items-center font-bold"
             >
               Discover My Career Code
