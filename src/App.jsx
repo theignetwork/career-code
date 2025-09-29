@@ -12,7 +12,6 @@ import Question8 from './components/questions/Question8.jsx';
 import Question9 from './components/questions/Question9.jsx';
 import Question10 from './components/questions/Question10.jsx';
 import CompactPartialResults from './components/CompactPartialResults.jsx';
-import CompleteResults from './components/CompleteResults.jsx';
 import ResultsModal from './components/ResultsModal.jsx';
 import ProgressIndicator from './components/ProgressIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
@@ -56,10 +55,18 @@ function App() {
     }
   };
 
-  // Close modal handler
+  // Close modal handler - Reset entire assessment
   const handleCloseModal = () => {
     setShowResultsModal(false);
     setModalResults(null);
+
+    // Reset the entire assessment back to landing page
+    resetAssessment();
+
+    // Track event
+    iframeOptimizer.sendEventToParent('results-modal-closed', {
+      action: 'reset-to-landing'
+    });
   };
 
   // Initialize iframe optimizations
@@ -89,8 +96,7 @@ function App() {
       8: 'trigger-success',
       9: 'trigger-motivation',
       10: 'trigger-legacy',
-      11: 'partial-results',
-      12: 'complete-results'
+      11: 'partial-results'
     };
     return stepNames[step] || 'unknown';
   };
@@ -189,15 +195,6 @@ function App() {
             careerCode={careerCode}
             topCareer={rankedCareers[1]} // Show #2 career as teaser
             onEmailCapture={handleEmailCapture}
-          />
-        );
-
-      case 12:
-        return (
-          <CompleteResults
-            careerCode={careerCode}
-            rankedCareers={rankedCareers}
-            onRestart={resetAssessment}
           />
         );
 
