@@ -30,7 +30,7 @@ export const initGA4 = () => {
     gtag('js', new Date());
     gtag('config', GA4_MEASUREMENT_ID, {
       // Enhanced measurement settings
-      send_page_view: true,
+      send_page_view: false, // Disabled for Career Code tool
       page_title: document.title || 'Career Code Assessment',
       page_location: window.location.href,
       stream_id: GA4_STREAM_ID,

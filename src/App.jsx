@@ -88,8 +88,8 @@ function App() {
     // Initialize GA4 analytics
     analytics.initGA4();
 
-    // Track initial page view
-    analytics.trackPageView('Career Code Assessment', '/');
+    // Page view tracking disabled for Career Code tool
+    // analytics.trackPageView('Career Code Assessment', '/');
 
     // Track page views and events for iframe parent
     iframeOptimizer.sendEventToParent('assessment-loaded');
